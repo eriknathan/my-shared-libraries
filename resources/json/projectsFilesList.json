@@ -1,0 +1,14 @@
+{
+    "santacruz": {
+        "santacruz-fe": [
+            {"develop": "0fef33e4-fc17-4f91-9302-5790c2df8cf2"},
+            {"qa": "0fef33e4-fc17-4f91-9302-5790c2df8cf2"},
+            {"homolog": "0fef33e4-fc17-4f91-9302-5790c2df8cf2"}
+        ],
+        "santacruz-be": [
+            {"develop": "0fef33e4-fc17-4f91-9302-5790c2df8cf2"},
+            {"qa": "0fef33e4-fc17-4f91-9302-5790c2df8cf2"},
+            {"homolog": "0fef33e4-fc17-4f91-9302-5790c2df8cf2"}
+        ]
+    }
+}
