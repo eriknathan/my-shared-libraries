@@ -79,7 +79,7 @@ def call (Map pipelineParams) {
 }
 
 def copyFiles(Map params) {
-	def envjson = libraryResource 'json/projectsFilesList.json'
+	def envjson = libraryResource 'com/json/projectsFilesList.json'
 	def json = readJSON text: envjson
 
 	def fileId = json."${params.ProjectName}"."${params.ProjectName}".findResult { environment -> environment["${params.BranchName}"] }
