@@ -82,7 +82,7 @@ def copyFiles(Map params) {
 	def envjson = libraryResource 'json/projectsFilesList.json'
 	def json = readJSON text: envjson
 
-	def fileId = json.restapi-flask-mongodb."${params.ProjectName}".findResult { environment -> environment["${params.BranchName}"] }
+	def fileId = json."${params.ProjectName}"."${params.ProjectName}".findResult { environment -> environment["${params.BranchName}"] }
 
 	if (fileId) {
 		echo "ID branch ${params.BranchName} do projeto ${params.ProjectName}: ${fileId}"
