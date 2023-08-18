@@ -1,6 +1,6 @@
 // src/docker/DockerLib.groovy
 
-package com.docker
+package docker
 
 class DockerLib {
 
