@@ -7,7 +7,7 @@ def call (Map pipelineParams) {
 
 	pipeline {
 		agent { 
-			label 'rest-api'
+			label 'ubuntu'
 		}
 		environment {
 			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectBaseName}:${BRANCH_NAME}-${BUILD_NUMBER}"
@@ -57,6 +57,7 @@ def call (Map pipelineParams) {
 			}
 
 			stage('Image Run') {
+				agent { label 'rest-api' }
 				steps {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
@@ -76,7 +77,7 @@ def call (Map pipelineParams) {
 }
 
 def copyFiles(Map params) {
-	def envjson = libraryResource 'com/json/projectsFilesList.json'
+	def envjson = libraryResource 'json/projectsFilesList.json'
 	def json = readJSON text: envjson
 
 	def fileId = json.restapi-flask-mongodb."${params.ProjectName}".findResult { environment -> environment["${params.BranchName}"] }
