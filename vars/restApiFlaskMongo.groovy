@@ -21,7 +21,7 @@ def call (Map pipelineParams) {
 						echo " BUILD DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
 
-						copyFiles(ProjectName: "${projectBaseName}", BranchName: "${BRANCH_NAME}")
+						copyFiles(ProjectName: pipelineParams.projectBaseName, BranchName: "${BRANCH_NAME}")
 
 						sh "docker build -t ${projectBaseName}:${BRANCH_NAME}-${BUILD_NUMBER} --no-cache -f Dockerfile ."
 					}
@@ -64,7 +64,7 @@ def call (Map pipelineParams) {
 						echo " RODANDO A APLICAÇÃO"
 						echo " --------------------------------------------------------------------------------------- "
 
-						copyFiles(ProjectName: "${projectBaseName}", BranchName: "${BRANCH_NAME}")
+						copyFiles(ProjectName: pipelineParams.projectBaseName, BranchName: "${BRANCH_NAME}")
 
 						sh "echo DOCKER_IMAGE=${projectBaseName}:${BRANCH_NAME}-${BUILD_NUMBER} >> .env"
 						sh "echo CONTAINER_NAME=${projectBaseName}-${BRANCH_NAME} >> .env"
