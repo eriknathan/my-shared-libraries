@@ -58,7 +58,7 @@ def call (Map pipelineParams) {
 			}
 
 			stage('Image Run') {
-				agente { label 'rest-api' }
+				agent { label 'rest-api' }
 				steps {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
