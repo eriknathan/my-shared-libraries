@@ -12,7 +12,7 @@ def call (Map pipelineParams) {
 		environment {
 			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
 			BRANCH_NAME = "${BRANCH_NAME}"
-			PROJECT_NAME = "${projectName}"
+			PROJECT_NAME = env.JOB_NAME.split('/')[1]}
 		}
 		
 		stages {
@@ -23,7 +23,6 @@ def call (Map pipelineParams) {
 						echo " BUILD DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
 						
-						//configFileProvider([configFile(fileId: "e004133d-af4f-483d-8bdd-a9707f48a24e", targetLocation: '.env')]) {}
 						copyFiles(ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME)
 
 						sh "docker build -t $PROJECT_NAME:$BRANCH_NAME-${BUILD_NUMBER} --no-cache -f Dockerfile ."
@@ -59,15 +58,14 @@ def call (Map pipelineParams) {
 			}
 
 			stage('Image Run') {
-				//agent {label 'rest-api'}
+				agent {label 'rest-api'}
 				steps {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " RODANDO A APLICAÇÃO"
 						echo " --------------------------------------------------------------------------------------- "
 
-						//configFileProvider([configFile(fileId: "e004133d-af4f-483d-8bdd-a9707f48a24e", targetLocation: '.env')]) {}
-						//copyFiles(ProjectName: pipelineParams.projectName, BranchName: "${BRANCH_NAME}")
+						copyFiles(ProjectName: pipelineParams.projectName, BranchName: "${BRANCH_NAME}")
 
 						sh "echo DOCKER_IMAGE=$PROJECT_NAME:$BRANCH_NAME-${BUILD_NUMBER} >> .env"
 						sh "echo CONTAINER_NAME=$PROJECT_NAME-$BRANCH_NAME >> .env"
