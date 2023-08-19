@@ -10,7 +10,7 @@ def call (Map pipelineParams) {
 			label 'ubuntu'
 		}
 		environment {
-			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectBaseName}:${BRANCH_NAME}-${BUILD_NUMBER}"
+			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
 			BRANCH_NAME = "${BRANCH_NAME}"
 		}
 		
@@ -25,7 +25,7 @@ def call (Map pipelineParams) {
 						//configFileProvider([configFile(fileId: "e004133d-af4f-483d-8bdd-a9707f48a24e", targetLocation: '.env')]) {}
 						copyFiles(ProjectName: pipelineParams.projectName, BranchName: BRANCH_NAME)
 
-						sh "docker build -t ${projectBaseName}:$BRANCH_NAME-${BUILD_NUMBER} --no-cache -f Dockerfile ."
+						sh "docker build -t ${projectName}:$BRANCH_NAME-${BUILD_NUMBER} --no-cache -f Dockerfile ."
 					}
 				}
 			}
@@ -51,7 +51,7 @@ def call (Map pipelineParams) {
 						echo " PUSH DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
 
-						sh "docker tag ${projectBaseName}:$BRANCH_NAME-${BUILD_NUMBER} $DOCKER_IMAGE"
+						sh "docker tag ${projectName}:$BRANCH_NAME-${BUILD_NUMBER} $DOCKER_IMAGE"
 						sh "docker push $DOCKER_IMAGE"
 					}
 				}
@@ -66,10 +66,10 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 
 						//configFileProvider([configFile(fileId: "e004133d-af4f-483d-8bdd-a9707f48a24e", targetLocation: '.env')]) {}
-						//copyFiles(ProjectName: pipelineParams.projectBaseName, BranchName: "${BRANCH_NAME}")
+						//copyFiles(ProjectName: pipelineParams.projectName, BranchName: "${BRANCH_NAME}")
 
-						sh "echo DOCKER_IMAGE=${projectBaseName}:$BRANCH_NAME-${BUILD_NUMBER} >> .env"
-						sh "echo CONTAINER_NAME=${projectBaseName}-$BRANCH_NAME >> .env"
+						sh "echo DOCKER_IMAGE=${projectName}:$BRANCH_NAME-${BUILD_NUMBER} >> .env"
+						sh "echo CONTAINER_NAME=${projectName}-$BRANCH_NAME >> .env"
 
 						sh "docker image pull $DOCKER_IMAGE"
 						sh "docker-compose -f docker-compose-ci.yml up -d"
