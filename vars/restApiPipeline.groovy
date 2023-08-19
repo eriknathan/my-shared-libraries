@@ -10,8 +10,8 @@ def call (Map pipelineParams) {
 			label 'ubuntu'
 		}
 		environment {
-			//DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
-			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BUILD_NUMBER}"
+			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
+			//DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BUILD_NUMBER}"
 			BRANCH_NAME = "${BRANCH_NAME}"
 			PROJECT_NAME = "${projectName}"
 		}
