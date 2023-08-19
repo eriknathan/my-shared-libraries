@@ -7,7 +7,7 @@ def call (Map pipelineParams) {
 
 	pipeline {
 		agent { 
-			label 'ubuntu'
+			label 'rest-api'
 		}
 		environment {
 			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
@@ -31,6 +31,7 @@ def call (Map pipelineParams) {
 			}
 
 			stage('Teste Unitários') {
+				agent {label 'ubuntu'}
 				steps {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
@@ -58,7 +59,6 @@ def call (Map pipelineParams) {
 			}
 
 			stage('Image Run') {
-				agent {label 'rest-api'}
 				steps {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
