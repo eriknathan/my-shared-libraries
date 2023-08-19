@@ -12,7 +12,7 @@ def call (Map pipelineParams) {
 		environment {
 			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
 			BRANCH_NAME = "${BRANCH_NAME}"
-			PROJECT_NAME = env.JOB_NAME.split('/')[1]}
+			PROJECT_NAME = "${projectName}"
 		}
 		
 		stages {
@@ -24,7 +24,7 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 						
 						copyFiles(ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME)
-
+						
 						sh "docker build -t $PROJECT_NAME:$BRANCH_NAME-${BUILD_NUMBER} --no-cache -f Dockerfile ."
 					}
 				}
