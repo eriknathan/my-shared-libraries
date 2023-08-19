@@ -2,7 +2,7 @@
 
 def call (Map pipelineParams) {
 	
-	def projectBaseName = env.JOB_NAME.split('/')[1]
+	def projectName = env.JOB_NAME.split('/')[1]
 	def dockerLib = new docker.DockerLib()
 
 	pipeline {
@@ -11,6 +11,7 @@ def call (Map pipelineParams) {
 		}
 		environment {
 			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectBaseName}:${BRANCH_NAME}-${BUILD_NUMBER}"
+			BRANCH_NAME = "${BRANCH_NAME}"
 		}
 		
 		stages {
@@ -21,10 +22,10 @@ def call (Map pipelineParams) {
 						echo " BUILD DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
 						
-						configFileProvider([configFile(fileId: "e004133d-af4f-483d-8bdd-a9707f48a24e", targetLocation: '.env')]) {}
-						//copyFiles(ProjectName: pipelineParams.projectBaseName, BranchName: "${BRANCH_NAME}")
+						//configFileProvider([configFile(fileId: "e004133d-af4f-483d-8bdd-a9707f48a24e", targetLocation: '.env')]) {}
+						copyFiles(ProjectName: pipelineParams.projectName, BranchName: BRANCH_NAME)
 
-						sh "docker build -t ${projectBaseName}:${BRANCH_NAME}-${BUILD_NUMBER} --no-cache -f Dockerfile ."
+						sh "docker build -t ${projectBaseName}:$BRANCH_NAME-${BUILD_NUMBER} --no-cache -f Dockerfile ."
 					}
 				}
 			}
@@ -37,7 +38,6 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 						
 						sh "pip install -r requirements.txt"
-						sh "pip install flake8 pytest mongomock python-dotenv"
 
 						sh "make test"
 					}
@@ -51,25 +51,25 @@ def call (Map pipelineParams) {
 						echo " PUSH DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
 
-						sh "docker tag ${projectBaseName}:${BRANCH_NAME}-${BUILD_NUMBER} $DOCKER_IMAGE"
+						sh "docker tag ${projectBaseName}:$BRANCH_NAME-${BUILD_NUMBER} $DOCKER_IMAGE"
 						sh "docker push $DOCKER_IMAGE"
 					}
 				}
 			}
 
 			stage('Image Run') {
-				agent { label 'rest-api' }
+				//agent {label 'rest-api'}
 				steps {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " RODANDO A APLICAÇÃO"
 						echo " --------------------------------------------------------------------------------------- "
 
-						configFileProvider([configFile(fileId: "e004133d-af4f-483d-8bdd-a9707f48a24e", targetLocation: '.env')]) {}
+						//configFileProvider([configFile(fileId: "e004133d-af4f-483d-8bdd-a9707f48a24e", targetLocation: '.env')]) {}
 						//copyFiles(ProjectName: pipelineParams.projectBaseName, BranchName: "${BRANCH_NAME}")
 
-						sh "echo DOCKER_IMAGE=${projectBaseName}:${BRANCH_NAME}-${BUILD_NUMBER} >> .env"
-						sh "echo CONTAINER_NAME=${projectBaseName}-${BRANCH_NAME} >> .env"
+						sh "echo DOCKER_IMAGE=${projectBaseName}:$BRANCH_NAME-${BUILD_NUMBER} >> .env"
+						sh "echo CONTAINER_NAME=${projectBaseName}-$BRANCH_NAME >> .env"
 
 						sh "docker image pull $DOCKER_IMAGE"
 						sh "docker-compose -f docker-compose-ci.yml up -d"
