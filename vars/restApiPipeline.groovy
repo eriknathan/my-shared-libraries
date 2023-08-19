@@ -65,7 +65,7 @@ def call (Map pipelineParams) {
 						echo " RODANDO A APLICAÇÃO"
 						echo " --------------------------------------------------------------------------------------- "
 
-						copyFiles(ProjectName: pipelineParams.projectName, BranchName: "${BRANCH_NAME}")
+						copyFiles(ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME)
 
 						sh "echo DOCKER_IMAGE=$PROJECT_NAME:$BRANCH_NAME-${BUILD_NUMBER} >> .env"
 						sh "echo CONTAINER_NAME=$PROJECT_NAME-$BRANCH_NAME >> .env"
