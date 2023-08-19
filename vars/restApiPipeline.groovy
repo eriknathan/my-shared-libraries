@@ -71,7 +71,7 @@ def call (Map pipelineParams) {
 						sh "echo CONTAINER_NAME=$PROJECT_NAME-$BRANCH_NAME >> .env"
 
 						//sh "docker image pull $DOCKER_IMAGE"
-						sh "docker-compose -f docker-compose-ci.yml -p $PROJECT_NAME-$BRANCH_NAME up -d"
+						sh "docker-compose -f ${WORKSPACE}/docker-compose-ci.yml -p $PROJECT_NAME-$BRANCH_NAME up -d"
 					}
 				}
 			}
