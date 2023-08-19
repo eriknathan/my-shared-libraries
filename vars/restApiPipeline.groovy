@@ -7,7 +7,7 @@ def call (Map pipelineParams) {
 
 	pipeline {
 		agent { 
-			label 'rest-api'
+			label 'ubuntu'
 		}
 		environment {
 			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
