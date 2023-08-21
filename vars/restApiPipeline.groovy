@@ -11,7 +11,6 @@ def call (Map pipelineParams) {
 		}
 		environment {
 			DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
-			//DOCKER_IMAGE = "${DOCKER_REGISTRY}/${projectName}:${BUILD_NUMBER}"
 			BRANCH_NAME = "${BRANCH_NAME}"
 			PROJECT_NAME = "${projectName}"
 		}
@@ -52,7 +51,6 @@ def call (Map pipelineParams) {
 						echo " PUSH DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
 
-						//sh "docker tag $PROJECT_NAME:$BRANCH_NAME-${BUILD_NUMBER} $DOCKER_IMAGE"
 						sh "docker push $DOCKER_IMAGE"
 					}
 				}
@@ -71,8 +69,8 @@ def call (Map pipelineParams) {
 						sh "echo DOCKER_IMAGE=$DOCKER_IMAGE >> .env"
 						sh "echo CONTAINER_NAME=$PROJECT_NAME-$BRANCH_NAME >> .env"
 
-						//sh "docker image pull $DOCKER_IMAGE"
-						sh "docker-compose -f ${WORKSPACE}/docker-compose-ci.yml up -d"
+						sh "docker pull $DOCKER_IMAGE"
+						sh "docker compose -f ${WORKSPACE}/docker-compose-ci.yml up -d"
 					}
 				}
 			}
