@@ -1,5 +1,5 @@
 {
-    "restapi": {
+    "restapiflask": {
         "apirest": [
             {"develop": "e004133d-af4f-483d-8bdd-a9707f48a24e"},
             {"production": "8bae9a15-6b79-4050-afe0-3b6bcc125c78"}

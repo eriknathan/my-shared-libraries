@@ -5,7 +5,7 @@ package docker
 class DockerLib {
 
     def imgBuildPhase(Map params){
-        "docker build -t ${params.DockerImage} --no-cache -f ${params.DockerfilePath} ${params.DockerContext}"
+        "docker build -t ${params.DockerImage} --no-cache -f Dockerfile ."
     }
 
     def imgPushPhase(Map params){
@@ -21,6 +21,6 @@ class DockerLib {
          "echo CONTAINER_NAME=${params.ProjectName}-${params.BranchName} >> .env;" +
         
          "docker image pull ${params.DockerImage};" +
-         "docker-compose -f docker-compose.yml -p ${params.ProjectName}-${params.BranchName} up -d")
+         "docker-compose -f docker-compose.yaml up -d")
     }
 }
