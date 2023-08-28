@@ -21,6 +21,6 @@ class DockerLib {
          "echo CONTAINER_NAME=${params.ProjectName}-${params.BranchName} >> .env;" +
         
          "docker image pull ${params.DockerImage};" +
-         "docker compose -f docker-compose.yml up -d")
+         "docker compose -f docker-compose-ci.yml up -d")
     }
 }
