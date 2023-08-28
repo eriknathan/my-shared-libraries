@@ -39,7 +39,6 @@ def call (Map pipelineParams) {
 						
 						copyFiles(ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME)
 						
-						//sh "docker build -t $DOCKER_IMAGE --no-cache -f Dockerfile ."
 						sh dockerLib.imgBuildPhase(DockerImage: DOCKER_IMAGE)
 					}
 				}
@@ -52,7 +51,6 @@ def call (Map pipelineParams) {
 						echo " PUSH DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
 
-						//sh "docker push $DOCKER_IMAGE"
 						sh dockerLib.imgPushPhase(DockerImage: DOCKER_IMAGE)						
 					}
 				}
@@ -67,12 +65,6 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 
 						copyFiles(ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME)
-
-						// sh "echo DOCKER_IMAGE=$DOCKER_IMAGE >> .env"
-						// sh "echo CONTAINER_NAME=$PROJECT_NAME-$BRANCH_NAME >> .env"
-
-						// sh "docker pull $DOCKER_IMAGE"
-						// sh "docker compose -f docker-compose-ci.yml up -d"
 
 						sh dockerLib.imgRunPhase(DockerImage: DOCKER_IMAGE, 
 												 ProjectName: PROJECT_NAME,
