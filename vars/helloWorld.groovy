@@ -25,7 +25,7 @@ def call (Map pipelineParams) {
 						echo " TESTE: HELLOWORLD | $PROJECT_NAME"
 						echo " --------------------------------------------------------------------------------------- "
 						
-						echo "HelloWorld Testando"
+						eco "HelloWorld Testando"
 					}
 				}
 			}
@@ -43,6 +43,7 @@ def call (Map pipelineParams) {
 						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME"
 
 						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")
+
 						withCredentials([usernamePassword(credentialsId: 'github_login_erik', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
 							sh "git config --global user.email 'eriknathan.contato@gmail.com'"
 							sh "git config --global user.name 'eriknathan'"
@@ -54,7 +55,6 @@ def call (Map pipelineParams) {
 
 						}	
 						//sh gitLib.gitPush(Arquivo: ".jenkins", BranchName: "main")
-						//sh gitLib.gitPush(Arquivo: ".jenkins", GitUser: "${GIT_USERNAME}", GitPass: ${"GIT_PASSWORD"}, BranchName: BRANCH_NAME)
 				}
 			}
 		}
