@@ -3,9 +3,7 @@
 def call (Map pipelineParams) {
 	
 	def projectName = env.JOB_NAME.split('/')[0]
-	def projectNameBadge = env.JOB_NAME
 	def dockerLib = new docker.DockerLib()
-	def cleanLib = new docker.DockerLib()
 
 	pipeline {
 		agent { 
@@ -13,7 +11,7 @@ def call (Map pipelineParams) {
 		}
 		environment {
 			PROJECT_NAME = "${projectName}"
-			PROJECT_NAME_BADGE = "${projectNameBadge}"
+			//MODIFIED_JOB_NAME = JOB_NAME.replace("badges/", "badges/job/")
 		}
 		
 		stages {
@@ -21,7 +19,7 @@ def call (Map pipelineParams) {
 				steps {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
-						echo " TESTE: HELLOWORLD"
+						echo " TESTE: HELLOWORLD | $PROJECT_NAME"
 						echo " --------------------------------------------------------------------------------------- "
 						
 						echo "HelloWorld Testando"
