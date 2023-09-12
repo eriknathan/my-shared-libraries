@@ -29,9 +29,9 @@ def generate_badge(label, message, color):
 
 def main():
     job_name = sys.argv[1]
-    JENKINS_URL="http://146.235.30.4:8080/"
+    JENKINS_URL="http://localhost:8080/"
     JOB_NAME=f"{job_name}"
-    USERNAME="eriknathan"
+    USERNAME="admin"
     PASSWORD="admin123"
 
     build_status = status_lastbuild(JENKINS_URL, JOB_NAME, USERNAME, PASSWORD)
