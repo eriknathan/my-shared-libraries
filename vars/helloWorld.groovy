@@ -50,8 +50,7 @@ def call (Map pipelineParams) {
 							// Adicionar, fazer commit e push do arquivo modificado para o GitHub
 							sh "git add .jenkins"
 							sh "git commit -m 'Adicionar nova linha'"
-							sh "git push -u origin main"
-							//sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/seu-repositorio.git HEAD:branch-de-destino"
+							sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/${GIT_USERNAME}/https://github.com/seu-usuario/seu-repositorio.git HEAD:main"
 						}	
 						//sh gitLib.gitPush(Arquivo: ".jenkins", BranchName: "main")
 						//sh gitLib.gitPush(Arquivo: ".jenkins", GitUser: "${GIT_USERNAME}", GitPass: ${"GIT_PASSWORD"}, BranchName: BRANCH_NAME)
