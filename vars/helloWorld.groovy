@@ -5,6 +5,7 @@ def call (Map pipelineParams) {
 	def projectName = env.JOB_NAME.split('/')[0]
 	def dockerLib = new docker.DockerLib()
 	def cleanLib = new functions.CleanLib()
+	def gitLib = new functions.GitLib()
 
 	pipeline {
 		agent { 
@@ -12,6 +13,7 @@ def call (Map pipelineParams) {
 		}
 		environment {
 			PROJECT_NAME = "${projectName}"
+			BRANCH_NAME = "${BRANCH_NAME}"
 			MODIFIED_JOB_NAME = JOB_NAME.replace("${projectName}/", "${projectName}/job/")
 		}
 		
@@ -41,11 +43,9 @@ def call (Map pipelineParams) {
 						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME"
 
 						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")	
-
-						sh 'git add .jenkins'				
-						sh 'git commit -m "atualizando badges"'
-						sh "git push"	
+						sh gitLib.gitPush(Arquivo: '.jenkins', GitUser: GIT_USERNAME, GitPass: GIT_PASSWORD, BranchName: BRANCH_NAME)
 					}
+				}
 			}
 		}
 	}
