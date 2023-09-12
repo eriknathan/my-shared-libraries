@@ -28,6 +28,7 @@ def call (Map pipelineParams) {
 				}
 			}
 		}
+
 		post {
 			always {
 				script {
@@ -39,7 +40,11 @@ def call (Map pipelineParams) {
 						writeFile file: '.jenkins/status-badges.py', text: scriptpython
 						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME"
 
-						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")					
+						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")	
+
+						sh 'git add .jenkins'				
+						sh 'git commit -m "atualizando badges"'
+						sh "git push"	
 					}
 			}
 		}
