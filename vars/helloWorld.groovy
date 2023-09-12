@@ -39,13 +39,8 @@ def call (Map pipelineParams) {
 					sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME $JOB_NAME"
 
 					sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")
-
 					withCredentials([usernamePassword(credentialsId: 'github_login_erik', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-						sh "git config --global user.email 'eriknathan.contato@gmail.com'"
-						sh "git config --global user.name 'eriknathan'"
-
-						sh "git add .jenkins"
-						sh "git commit -m 'Adicionar nova linha'"
+						sh gitLib.gitPush(File: ".jenkins")
 						sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eriknathan/badge-status.git HEAD:main"
 					}	
 				}
