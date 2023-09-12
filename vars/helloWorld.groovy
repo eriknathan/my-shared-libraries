@@ -40,7 +40,7 @@ def call (Map pipelineParams) {
 
 						def scriptpython = libraryResource 'com/scripts/status-badges.py'
 						writeFile file: '.jenkins/status-badges.py', text: scriptpython
-						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME"
+						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME $JOB_NAME $BUILD_NUMBER"
 
 						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")
 

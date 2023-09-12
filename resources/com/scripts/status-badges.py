@@ -28,15 +28,18 @@ def generate_badge(label, message, color):
 
 
 def main():
-    job_name = sys.argv[1]
+    modified_job_name = sys.argv[1]
+    job_name = sys.argv[2]
+    number_build = sys.argv[3]
     JENKINS_URL="http://localhost:8080/"
-    JOB_NAME=f"{job_name}"
+    JOB_NAME=f"{modified_job_name}"
+    NUMBER_BUILD=f"{number_build}"
     USERNAME="admin"
     PASSWORD="admin123"
 
     build_status = status_lastbuild(JENKINS_URL, JOB_NAME, USERNAME, PASSWORD)
 
-    print(f"Status do último build de {job_name}: {build_status}")
+    print(f"Status do último build de {job_name}: {build_status}-{NUMBER_BUILD}")
     if build_status is not None:
         label = f"Build Status: {job_name}"
         message = build_status
