@@ -11,7 +11,7 @@ def call (Map pipelineParams) {
 		}
 		environment {
 			PROJECT_NAME = "${projectName}"
-			//MODIFIED_JOB_NAME = JOB_NAME.replace("badges/", "badges/job/")
+			MODIFIED_JOB_NAME = JOB_NAME.replace("${projectName}/", "${projectName}/job/")
 		}
 		
 		stages {
@@ -36,7 +36,7 @@ def call (Map pipelineParams) {
 
 						def scriptpython = libraryResource 'com/scripts/status-badges.py'
 						writeFile file: '.jenkins/status-badges.py', text: scriptpython
-						sh "python3 .jenkins/status-badges.py $PROJECT_NAME_BADGE"
+						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME"
 					}
 			}
 		}
