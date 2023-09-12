@@ -34,7 +34,12 @@ def call (Map pipelineParams) {
 		post {
 			always {
 				script {
-					currentBuild.resultIsWorseOrEqualTo('FAILURE') ? status = 'FAILED' : status = 'SUCCESS'
+					def status = ''
+					if (currentBuild.resultIsWorseOrEqualTo('FAILURE')) {
+						status = 'FAILED'
+					} else {
+						status = 'SUCCESS'
+					}
 					def scriptpython = libraryResource 'com/scripts/status-badges.py'
 					writeFile file: '.jenkins/status-badges.py', text: scriptpython
 					sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME $JOB_NAME $status"
