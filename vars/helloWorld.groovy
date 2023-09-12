@@ -43,7 +43,7 @@ def call (Map pipelineParams) {
 						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME"
 
 						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")	
-						sh gitLib.gitPush(Arquivo: ".jenkins", BranchName: BRANCH_NAME)
+						sh gitLib.gitPush(Arquivo: ".jenkins", BranchName: "main")
 						//sh gitLib.gitPush(Arquivo: ".jenkins", GitUser: "${GIT_USERNAME}", GitPass: ${"GIT_PASSWORD"}, BranchName: BRANCH_NAME)
 				}
 			}
