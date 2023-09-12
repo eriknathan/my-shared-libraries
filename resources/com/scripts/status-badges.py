@@ -32,7 +32,6 @@ def main():
     job_name = sys.argv[2]
     JENKINS_URL="http://localhost:8080/"
     JOB_NAME=f"{modified_job_name}"
-    NUMBER_BUILD=f"{number_build}"
     USERNAME="admin"
     PASSWORD="admin123"
 
