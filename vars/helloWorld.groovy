@@ -18,14 +18,14 @@ def call (Map pipelineParams) {
 		}
 		
 		stages {
-			stage('Teste Unitários') {
+			stage('Teste') {
 				steps {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " TESTE: HELLOWORLD | $PROJECT_NAME"
 						echo " --------------------------------------------------------------------------------------- "
 						
-						eco "HelloWorld Testando"
+						echo "HelloWorld Testando"
 					}
 				}
 			}
