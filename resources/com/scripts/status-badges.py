@@ -35,8 +35,8 @@ def main():
     USERNAME="admin"
     PASSWORD="admin123"
 
-    # build_status = status_lastbuild(JENKINS_URL, JOB_NAME, USERNAME, PASSWORD)
-    build_status = sys.argv[3]
+    build_status = status_lastbuild(JENKINS_URL, JOB_NAME, USERNAME, PASSWORD)
+    #build_status = sys.argv[3]
 
     print(f"Status do último build de {job_name}: {build_status}")
     if build_status is not None:

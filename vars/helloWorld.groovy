@@ -39,7 +39,8 @@ def call (Map pipelineParams) {
 
 					def scriptpython = libraryResource 'com/scripts/status-badges.py'
 					writeFile file: '.jenkins/status-badges.py', text: scriptpython
-					sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME $JOB_NAME ${currentBuild.result}"
+					sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME $JOB_NAME"
+					//sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME $JOB_NAME ${currentBuild.result}"
 
 					sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")
 					withCredentials([usernamePassword(credentialsId: 'github_login_erik', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
