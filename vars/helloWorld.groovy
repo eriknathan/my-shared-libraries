@@ -40,7 +40,7 @@ def call (Map pipelineParams) {
 
 					sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")
 					withCredentials([usernamePassword(credentialsId: 'github_login_erik', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-						sh gitLib.gitPush(File: ".jenkins")
+						sh gitLib.gitPush(File: ".jenkins/")
 						sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eriknathan/badge-status.git HEAD:main"
 					}	
 				}
