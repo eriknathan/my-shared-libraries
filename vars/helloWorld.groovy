@@ -42,8 +42,17 @@ def call (Map pipelineParams) {
 						writeFile file: '.jenkins/status-badges.py', text: scriptpython
 						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME"
 
-						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")	
-						sh gitLib.gitPush(Arquivo: ".jenkins", BranchName: "main")
+						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")
+						withCredentials([usernamePassword(credentialsId: 'github_login_erik', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+							sh "git config --global user.email 'eriknathan.contato@gmail.com'"
+							sh "git config --global user.name 'eriknathan'"
+
+							// Adicionar, fazer commit e push do arquivo modificado para o GitHub
+							sh "git add .jenkins"
+							sh "git commit -m 'Adicionar nova linha'"
+							sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/seu-usuario/seu-repositorio.git HEAD:branch-de-destino"
+						}	
+						//sh gitLib.gitPush(Arquivo: ".jenkins", BranchName: "main")
 						//sh gitLib.gitPush(Arquivo: ".jenkins", GitUser: "${GIT_USERNAME}", GitPass: ${"GIT_PASSWORD"}, BranchName: BRANCH_NAME)
 				}
 			}
