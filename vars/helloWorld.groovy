@@ -44,7 +44,6 @@ def call (Map pipelineParams) {
 
 						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")	
 						sh gitLib.gitPush(Arquivo: '.jenkins', GitUser: GIT_USERNAME, GitPass: GIT_PASSWORD, BranchName: BRANCH_NAME)
-					}
 				}
 			}
 		}
