@@ -31,9 +31,15 @@ def call (Map pipelineParams) {
 		}
 		post {
 			always {
-				def scriptpython = libraryResource 'com/scripts/status-badges.py'
-				writeFile file: '.jenkins/status-badges.py', text: scriptpython
-				sh "python3 .jenkins/status-badges.py $PROJECT_NAME_BADGE"
+				script {
+						echo " --------------------------------------------------------------------------------------- "
+						echo " GERANDO BADGE DE STATUS "
+						echo " --------------------------------------------------------------------------------------- "
+
+						def scriptpython = libraryResource 'com/scripts/status-badges.py'
+						writeFile file: '.jenkins/status-badges.py', text: scriptpython
+						sh "python3 .jenkins/status-badges.py $PROJECT_NAME_BADGE"
+					}
 			}
 		}
 	}
