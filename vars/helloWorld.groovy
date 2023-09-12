@@ -3,6 +3,7 @@
 def call (Map pipelineParams) {
 	
 	def projectName = env.JOB_NAME.split('/')[0]
+	def projectNameBadge = env.JOB_NAME
 	def dockerLib = new docker.DockerLib()
 	def cleanLib = new docker.DockerLib()
 
@@ -12,7 +13,7 @@ def call (Map pipelineParams) {
 		}
 		environment {
 			PROJECT_NAME = "${projectName}"
-			PROJECT_NAME_BADGE = env.JOB_NAME
+			PROJECT_NAME_BADGE = "${projectNameBadge}"
 		}
 		
 		stages {
