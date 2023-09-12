@@ -20,7 +20,7 @@ def call (Map pipelineParams) {
 		stages {
 			stage('Teste') {
 				steps {
-					script {
+					scrip {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " TESTE: HELLOWORLD | $PROJECT_NAME"
 						echo " --------------------------------------------------------------------------------------- "
@@ -34,27 +34,20 @@ def call (Map pipelineParams) {
 		post {
 			always {
 				script {
-						echo " --------------------------------------------------------------------------------------- "
-						echo " GERANDO BADGE DE STATUS "
-						echo " --------------------------------------------------------------------------------------- "
+					def scriptpython = libraryResource 'com/scripts/status-badges.py'
+					writeFile file: '.jenkins/status-badges.py', text: scriptpython
+					sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME $JOB_NAME"
 
-						def scriptpython = libraryResource 'com/scripts/status-badges.py'
-						writeFile file: '.jenkins/status-badges.py', text: scriptpython
-						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME $JOB_NAME $BUILD_NUMBER"
+					sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")
 
-						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")
+					withCredentials([usernamePassword(credentialsId: 'github_login_erik', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
+						sh "git config --global user.email 'eriknathan.contato@gmail.com'"
+						sh "git config --global user.name 'eriknathan'"
 
-						withCredentials([usernamePassword(credentialsId: 'github_login_erik', usernameVariable: 'GIT_USERNAME', passwordVariable: 'GIT_PASSWORD')]) {
-							sh "git config --global user.email 'eriknathan.contato@gmail.com'"
-							sh "git config --global user.name 'eriknathan'"
-
-							// Adicionar, fazer commit e push do arquivo modificado para o GitHub
-							sh "git add .jenkins"
-							sh "git commit -m 'Adicionar nova linha'"
-							sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eriknathan/badge-status.git HEAD:main"
-
-						}	
-						//sh gitLib.gitPush(Arquivo: ".jenkins", BranchName: "main")
+						sh "git add .jenkins"
+						sh "git commit -m 'Adicionar nova linha'"
+						sh "git push https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/eriknathan/badge-status.git HEAD:main"
+					}	
 				}
 			}
 		}
