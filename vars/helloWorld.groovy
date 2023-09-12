@@ -4,6 +4,7 @@ def call (Map pipelineParams) {
 	
 	def projectName = env.JOB_NAME.split('/')[0]
 	def dockerLib = new docker.DockerLib()
+	def cleanLib = new docker.cleanLib()
 
 	pipeline {
 		agent { 
@@ -37,6 +38,8 @@ def call (Map pipelineParams) {
 						def scriptpython = libraryResource 'com/scripts/status-badges.py'
 						writeFile file: '.jenkins/status-badges.py', text: scriptpython
 						sh "python3 .jenkins/status-badges.py $MODIFIED_JOB_NAME"
+
+						sh cleanLib.cleanFiles(File: ".jenkins/status-badges.py")					
 					}
 			}
 		}

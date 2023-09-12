@@ -48,7 +48,7 @@ def main():
         badge_content = generate_badge(label, message, color)
 
         if badge_content is not None:
-            with open("badge-status-build.svg", "wb") as badge_file:
+            with open(".jenkins/badge-status-build.svg", "wb") as badge_file:
                 badge_file.write(badge_content)
             print("Badge gerado com sucesso!")
         else:
