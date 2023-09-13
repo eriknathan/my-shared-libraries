@@ -3,7 +3,6 @@
 def call (Map pipelineParams) {
 	
 	def projectName = env.JOB_NAME.split('/')[0]
-	def dockerLib = new docker.DockerLib()
 	def cleanLib = new functions.CleanLib()
 	def gitLib = new functions.GitLib()
 
@@ -28,7 +27,7 @@ def call (Map pipelineParams) {
 						echo "HelloWorld Testando"
 					}
 				}
-			}
+			//}
 		}
 
 		post {
