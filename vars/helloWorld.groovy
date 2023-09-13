@@ -24,10 +24,10 @@ def call (Map pipelineParams) {
 						echo " TESTE: HELLOWORLD | $PROJECT_NAME"
 						echo " --------------------------------------------------------------------------------------- "
 						
-						echo "HelloWorld Testando"
+						ech "HelloWorld Testando"
 					}
 				}
-			//}
+			}
 		}
 
 		post {
