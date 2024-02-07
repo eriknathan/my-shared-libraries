@@ -2,7 +2,7 @@
 
 def call (Map pipelineParams) {
 
-	def cleanLib = new com.functions.CleanLib()
+	def cleanLib = new functions.CleanLib()
 
     pipeline {
         agent { 
