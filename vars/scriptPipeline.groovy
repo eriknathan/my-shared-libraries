@@ -6,7 +6,7 @@ def call (Map pipelineParams) {
 
     pipeline {
         agent { 
-            label 'ubuntu'
+            label 'desktop'
         }
 
 		stages {
