@@ -1,7 +1,6 @@
 // vars/restApiFlaskMongo.groovy
 
 def call (Map pipelineParams) {
-	
 	def projectName = env.JOB_NAME.split('/')[0]
 	def dockerLib = new docker.DockerLib()
 
