@@ -19,8 +19,8 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 
 						def scriptpython = libraryResource 'com/scripts/monitoramento.py'
-						writeFile file: './monitoramento.py', text: scriptpython
-						sh 'python3 ./monitoramento.py'
+						writeFile file: 'monitoramento.py', text: scriptpython
+						sh 'python3 monitoramento.py'
 						
 						sh cleanLib.cleanFiles(File: "monitoramento.py")
 					}

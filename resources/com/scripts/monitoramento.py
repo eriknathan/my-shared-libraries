@@ -2,7 +2,6 @@ import psutil
 import datetime
 import platform
 import socket
-import requests
 
 # Variaveis de Horas e Datas
 data_hora_atual = datetime.datetime.now()
