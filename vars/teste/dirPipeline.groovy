@@ -1,4 +1,4 @@
-def call (Map pipelineParams) {
+def dir () {
 
 	pipeline {
 		agent { 
