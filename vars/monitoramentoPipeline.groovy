@@ -20,6 +20,7 @@ def call (Map pipelineParams) {
 
 						def scriptpython = libraryResource 'com/scripts/monitoramento.py'
 						writeFile file: 'monitoramento.py', text: scriptpython
+						sh 'pip install psutil'
 						sh 'python3 monitoramento.py'
 						
 						sh cleanLib.cleanFiles(File: "monitoramento.py")
