@@ -9,6 +9,11 @@ def call (Map pipelineParams) {
             label 'desktop'
         }
 
+		environment {
+            VAR_TESTE = "${PROJECT_NAME}"
+		}
+
+
 		stages {
 			
 			stage('Script Shell') {
@@ -21,7 +26,7 @@ def call (Map pipelineParams) {
 						
 						def scriptbash = libraryResource 'com/scripts/segredos.sh'
 						writeFile file: './segredos.sh', text: scriptbash
-						sh 'bash ./segredos.sh Erik 21 Masc'
+						sh "bash ./segredos.sh ${VAR_TESTE}"
 
 						sh cleanLib.cleanFiles(File: "segredos.sh")
 					}
