@@ -1,2 +1,5 @@
 #!/bin/bash
-echo "Build: $1
+
+BUILD_NAMER=$1
+
+echo "Build: '"${BUILD_NAMER}"'
