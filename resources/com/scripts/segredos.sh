@@ -2,4 +2,4 @@
 
 NAME=$1
 
-echo "JOB NAME: '"${NAME}"'
+echo "JOB NAME: '"${NAME}"'"
