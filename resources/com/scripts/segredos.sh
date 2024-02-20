@@ -1,2 +1,2 @@
 #!/bin/bash
-echo "Nome: $1
+echo "Build: $1
