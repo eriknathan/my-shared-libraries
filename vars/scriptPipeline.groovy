@@ -11,6 +11,7 @@ def call (Map pipelineParams) {
 
 		environment {
             NAME = "${JOB_NAME}"
+			BUILD_NUMBER = "${BUILD_NUMBER}"
 		}
 
 
@@ -26,7 +27,7 @@ def call (Map pipelineParams) {
 						
 						def scriptbash = libraryResource 'com/scripts/segredos.sh'
 						writeFile file: './segredos.sh', text: scriptbash
-						sh "bash ./segredos.sh ${NAME}"
+						sh "bash ./segredos.sh ${NAME} ${BUILD_NUMBER}"
 
 						sh cleanLib.cleanFiles(File: "segredos.sh")
 					}
