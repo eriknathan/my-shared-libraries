@@ -1,5 +1,5 @@
 #!/bin/bash
 
-BUILD_NAMER=$1
+NAME=$1
 
-echo "Build: '"${BUILD_NAMER}"'
+echo "JOB NAME: '"${NAME}"'

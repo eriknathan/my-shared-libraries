@@ -10,7 +10,7 @@ def call (Map pipelineParams) {
         }
 
 		environment {
-            VAR_TESTE = "${BUILD_NUMBER}"
+            NAME = "${JOB_NAME}"
 		}
 
 
@@ -26,7 +26,7 @@ def call (Map pipelineParams) {
 						
 						def scriptbash = libraryResource 'com/scripts/segredos.sh'
 						writeFile file: './segredos.sh', text: scriptbash
-						sh "bash ./segredos.sh ${VAR_TESTE}"
+						sh "bash ./segredos.sh ${NAME}"
 
 						sh cleanLib.cleanFiles(File: "segredos.sh")
 					}
