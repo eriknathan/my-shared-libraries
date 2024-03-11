@@ -24,7 +24,7 @@ def call (Map pipelineParams) {
 					def scriptpython = libraryResource 'com/scripts/call_pipeline.py'
 					writeFile file: './call_pipeline.py', text: scriptpython
 
-					sh 'python3 ./call_pipeline.py Teste/pipeline-chamada'
+					sh '/usr/bin/python3 ./call_pipeline.py Teste/pipeline-chamada'
 					echo "Limpando arquivos temporários..."
 					sh "sudo rm call_pipeline.py"
 				}
