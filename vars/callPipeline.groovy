@@ -32,8 +32,8 @@ def call (Map pipelineParams) {
 			// }
             success {
                 mail to: 'eriknathan.contato@gmail.com',
-                subject: "Pipeline: ${currentBuild.fullDisplayName}",
-                body: "Something is wrong with ${env.BUILD_URL}"
+                subject: "Pipeline",
+                body: "Something is wrong with"
             }            
 		}
 	}
