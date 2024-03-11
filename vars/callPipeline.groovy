@@ -9,7 +9,7 @@ def call (Map pipelineParams) {
 					script {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " CHAMANDO PIPELINE!"
-						ech " --------------------------------------------------------------------------------------- "
+						echo " --------------------------------------------------------------------------------------- "
 					}
 				}
 			}
@@ -25,10 +25,15 @@ def call (Map pipelineParams) {
 					writeFile file: './call_pipeline.py', text: scriptpython
 
                     sh 'pip install jenkinsapi'
-					sh 'python3 ./call_pipeline.py Teste/pipeline-chamada'
-					echo "Limpando arquivos temporários..."
-					sh "sudo rm call_pipeline.py"
+					// sh 'python3 ./call_pipeline.py Teste/pipeline-chamada'
+					// echo "Limpando arquivos temporários..."
+					// sh "sudo rm call_pipeline.py"
 				}
+            always {
+                mail to: 'eriknathan.contato@gmail.com',
+                subject: "Pipeline: ${currentBuild.fullDisplayName}",
+                body: "Something is wrong with ${env.BUILD_URL}"
+            }            
 			}
 		}
 	}
