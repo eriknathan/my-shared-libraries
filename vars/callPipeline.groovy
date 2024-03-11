@@ -4,9 +4,7 @@ def call (Map pipelineParams) {
 		agent { label 'desktop' }
 		
 		stages {
-			stage('Image Run') {
-				agent { label getAgentForDeploy(env.BRANCH_NAME) }
-                
+			stage('Image Run') {                
 				steps {				
 					script {
 						echo " --------------------------------------------------------------------------------------- "
