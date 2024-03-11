@@ -1,14 +1,8 @@
 def call (Map pipelineParams) {
 	
-	def projectName = pipelineParams.projectName
-
 	pipeline {
 		agent { label 'desktop' }
 		
-		environment {
-			DOCKER_IMAGE = "${ECR_DEFAULT_REGISTRY}/${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
-		}
-	
 		stages {
 			stage('Image Run') {
 				agent { label getAgentForDeploy(env.BRANCH_NAME) }
