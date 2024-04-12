@@ -26,6 +26,7 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " BUILD DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
+					    telegramStartNotify(Stage: "build", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
                     } 						
                 }
             }
@@ -46,7 +47,7 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " ENVIANDO ALERTAS"
 						echo " --------------------------------------------------------------------------------------- "  
-					    telegramStartNotify(ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
+					    telegramStartNotify(Stage: "run", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
 					}
 				}
 			}
@@ -75,6 +76,10 @@ def telegramStartNotify(Map params){
 
     def scriptbash = libraryResource 'com/scripts/telegramNotify.sh'
 	writeFile file: './telegramNotify.sh', text: scriptbash
-	// sh "bash ./telegramNotify.sh send_build_alert ${params.ProjectName} ${params.BranchName} '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
-	sh "bash ./telegramNotify.sh send_success_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+
+    if ("${params.Stage}" == 'build') {
+	    sh "bash ./telegramNotify.sh send_build_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+    } else {
+	    sh "bash ./telegramNotify.sh send_success_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+    }
 }
