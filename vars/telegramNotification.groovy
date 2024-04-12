@@ -10,7 +10,7 @@ def call (Map pipelineParams) {
 	def projectName = pipelineParams.projectName
 
 	pipeline {
-		agent { label 'projetos' }
+		agent { label 'desktop' }
 		
 		environment {
 			DOCKER_IMAGE = "${projectName}:${BRANCH_NAME}-${BUILD_NUMBER}"
