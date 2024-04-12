@@ -1,10 +1,3 @@
-// Pipeline do Projeto MouraConnect
-// - URL no jenkins: https://jenkins.isitics.com/job/mouraconnect/
-// - Ambientes: mouraconnect-be (develop, homolog, qa)
-//              mouraconnect-fe (develop, homolog, qa)
-// - Autor: Erik Nathan - erik.batista@sistemafiepe.org.br | @eriknathan
-// - OBS: 
-
 def call (Map pipelineParams) {
 	
 	def projectName = pipelineParams.projectName
@@ -55,24 +48,9 @@ def call (Map pipelineParams) {
 	}
 }
 
-def copyFiles(Map params) {
-	def envjson = libraryResource 'json/projectsFilesList.json'
-	def json = readJSON text: envjson
-
-	def fileId = json.mouraconnect."${params.ProjectName}".findResult { environment -> environment["${params.BranchName}"] }
-
-	if (fileId) {
-		echo "ID branch ${params.BranchName} do projeto ${params.ProjectName}: ${fileId}"
-		configFileProvider([configFile(fileId: fileId, targetLocation: '.env')]) {}
-	} else {
-		echo "Não foi encontrando o Id da branch ${params.BranchName} no projeto ${params.ProjectName}."
-	}
-} 
-
 def telegramStartNotify(Map params){
 	gitAuthor = sh(script: 'git show -s --format="%an" | sed "s/ //g"', returnStdout: true).trim()
     commitMessage = sh(script: 'git show -s --format=%s', returnStdout: true).trim()
-	author = gitAuthor.replaceAll(/^([^<]+).*$/, '$1').trim()
 
     def scriptbash = libraryResource 'com/scripts/telegramNotify.sh'
 	writeFile file: './telegramNotify.sh', text: scriptbash
