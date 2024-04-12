@@ -34,14 +34,17 @@ send_build_alert() {
 }
 
 send_success_alert() {
-  if [ $# -lt 3 ]; then
-    echo "Uso: $0 send_success_alert PROJETO BUILD STATUS"
+  if [ $# -lt 5 ]; then
+    echo "Uso: $0 send_build_alert PROJETO BRANCH BUILD COMMIT AUTOR"
     exit 1
   fi
 
   PROJECT=$1
-  BUILD=$2
-  STATUS=$3
+  BRANCH=$2
+  BUILD=$3
+  COMMIT=$4
+  AUTHOR=$5
+
   MESSAGE="
   ✅ SUCESSO ✅
   - <b>Projeto:</b> $PROJECT
