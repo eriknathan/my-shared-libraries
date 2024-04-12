@@ -15,7 +15,6 @@ send_build_alert() {
   BUILD=$3
   COMMIT=$4
   AUTHOR=$5
-  STATUS=$6
 
   MESSAGE="
   ⚠️ ALERTA ⚠️
