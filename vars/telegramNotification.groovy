@@ -24,16 +24,6 @@ def call (Map pipelineParams) {
                 }
             }
 
-			stage('Image Push') {
-				steps {
-					script {
-						echo " --------------------------------------------------------------------------------------- "
-						echo " PUSH DA IMAGEM: $DOCKER_IMAGE"
-						echo " --------------------------------------------------------------------------------------- "
-					}
-				}
-			}
-
 			stage('Image Run') {
 				steps {				
 					script {
