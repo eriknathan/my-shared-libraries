@@ -5,8 +5,8 @@ TOKEN="7027603350:AAGt2HsCMrRYp5BMa44kKUluC0dE_tha_xc"
 CHAT_ID="-4178298213"
 
 send_build_alert() {
-  if [ $# -lt 6 ]; then
-    echo "Uso: $0 send_build_alert PROJETO BRANCH BUILD COMMIT AUTOR STATUS"
+  if [ $# -lt 5 ]; then
+    echo "Uso: $0 send_build_alert PROJETO BRANCH BUILD COMMIT AUTOR"
     exit 1
   fi
 
