@@ -46,7 +46,7 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " ENVIANDO ALERTAS"
 						echo " --------------------------------------------------------------------------------------- "  
-					    telegramStartNotify(projectName)
+					    telegramStartNotify(ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
 					}
 				}
 			}
@@ -68,12 +68,12 @@ def copyFiles(Map params) {
 	}
 } 
 
-def telegramStartNotify(projectName){
-	gitAuthor = sh(script: 'git show -s --format="%an <%ae>"', returnStdout: true).trim()
+def telegramStartNotify(Map params){
+	gitAuthor = sh(script: 'git show -s --format="%an" | sed "s/ //g"', returnStdout: true).trim()
     commitMessage = sh(script: 'git show -s --format=%s', returnStdout: true).trim()
 	author = gitAuthor.replaceAll(/^([^<]+).*$/, '$1').trim()
 
     def scriptbash = libraryResource 'com/scripts/telegramNotify.sh'
 	writeFile file: './telegramNotify.sh', text: scriptbash
-	sh 'bash ./telegramNotify.sh send_build_alert "Meu Projeto" "Minha Branch" "123" "abc123" "João" "Em progresso"'
+	sh "bash ./telegramNotify.sh send_build_alert ${params.ProjectName} ${params.BranchName} '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
 }

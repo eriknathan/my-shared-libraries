@@ -24,8 +24,7 @@ send_build_alert() {
   - <b>Build:</b> $BUILD
   - <b>Commit:</b> $COMMIT
   - <b>Autor:</b> $AUTHOR
-  - <b>Status:</b> $STATUS
-  Building... ⚠️
+  - <b>Status:</b> Building... ⚠️
   "
 
   curl -s -X POST \
@@ -51,8 +50,7 @@ send_success_alert() {
   - <b>Build:</b> $BUILD
   - <b>Commit:</b> $COMMIT
   - <b>Autor:</b> $AUTHOR
-  - <b>Status:</b> $STATUS
-  Concluído com sucesso! ✅ 
+  - <b>Status:</b> Concluído com sucesso! ✅ 
   "
 
   curl -s -X POST \
