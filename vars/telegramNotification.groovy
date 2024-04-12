@@ -73,7 +73,7 @@ def telegramStartNotify(projectName){
     commitMessage = sh(script: 'git show -s --format=%s', returnStdout: true).trim()
 	author = gitAuthor.replaceAll(/^([^<]+).*$/, '$1').trim()
 
-    def scriptbash = libraryResource 'scripts/telegramNotify.sh'
+    def scriptbash = libraryResource 'com/scripts/telegramNotify.sh'
 	writeFile file: './telegramNotify.sh', text: scriptbash
 	sh 'bash ./telegramNotify.sh send_build_alert "Meu Projeto" "Minha Branch" "123" "abc123" "João" "Em progresso"'
 }
