@@ -3,6 +3,8 @@
 # Defina suas variáveis
 TOKEN="7027603350:AAGt2HsCMrRYp5BMa44kKUluC0dE_tha_xc"
 CHAT_ID="-4178298213"
+DATA_HORA=$(date +"%d-%m-%Y %H-%M-%S")
+
 
 send_build_alert() {
   if [ $# -lt 5 ]; then
@@ -23,6 +25,7 @@ send_build_alert() {
   - <b>Build:</b> $BUILD
   - <b>Commit:</b> $COMMIT
   - <b>Autor:</b> $AUTHOR
+  - <b>Data e Hora:</b> $DATA_HORA
   - <b>Status:</b> Building... ⚠️
   "
 
@@ -52,6 +55,7 @@ send_success_alert() {
   - <b>Build:</b> $BUILD
   - <b>Commit:</b> $COMMIT
   - <b>Autor:</b> $AUTHOR
+  - <b>Data e Hora:</b> $DATA_HORA
   - <b>Status:</b> Concluído com sucesso! ✅ 
   "
 

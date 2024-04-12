@@ -30,11 +30,18 @@ def call (Map pipelineParams) {
 						echo " --------------------------------------------------------------------------------------- "
 						echo " ENVIANDO ALERTAS"
 						echo " --------------------------------------------------------------------------------------- "  
-					    telegramStartNotify(Stage: "run", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
 					}
 				}
 			}
 		}
+        post {
+            success {
+			    telegramStartNotify(Stage: "success", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
+            }
+            failure {
+                telegramStartNotify(Stage: "failure", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
+            }
+        }
 	}
 }
 
