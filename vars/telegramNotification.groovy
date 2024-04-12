@@ -75,6 +75,5 @@ def telegramStartNotify(Map params){
 
     def scriptbash = libraryResource 'com/scripts/telegramNotify.sh'
 	writeFile file: './telegramNotify.sh', text: scriptbash
-	// sh "bash ./telegramNotify.sh send_build_alert ${params.ProjectName} ${params.BranchName} '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
-	sh "bash ./telegramNotify.sh send_build_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' 'Em progresso' "
+	sh "bash ./telegramNotify.sh send_build_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
 }
