@@ -18,17 +18,17 @@ send_build_alert() {
     BUILD_URL=$6
 
     MESSAGE="--------------------------------------------------------------- \n\
-    ⚠️ **ALERTA DE BUILD** ⚠️ \n\
-    --------------------------------------------------------------- \n\
-    - **Projeto:** $PROJECT \n\
-    - **Branch:** $BRANCH \n\
-    - **Build:** $BUILD \n\
-    - **Commit:** $COMMIT \n\
-    - **Autor:** $AUTHOR \n\
-    - **Data e Hora:** $DATA_HORA \n\
-    - **URL:** $BUILD_URL \n\
-    - **Status:** Building... ⚠️ \n\
-    ---------------------------------------------------------------" 
+⚠️ **ALERTA DE BUILD** ⚠️ \n\
+--------------------------------------------------------------- \n\
+- **Projeto:** $PROJECT \n\
+- **Branch:** $BRANCH \n\
+- **Build:** $BUILD \n\
+- **Commit:** $COMMIT \n\
+- **Autor:** $AUTHOR \n\
+- **Data e Hora:** $DATA_HORA \n\
+- **URL:** $BUILD_URL \n\
+- **Status:** Building... ⚠️ \n\
+---------------------------------------------------------------" 
 
     DATA="{\"content\":\"$MESSAGE\"}"
     curl -X POST -H "Content-Type: application/json" -d "$DATA" "$WEBHOOK_URL"
@@ -48,17 +48,17 @@ send_success_alert() {
     BUILD_URL=$6
 
     MESSAGE="--------------------------------------------------------------- \n\
-    ✅ **BUILD SUCCESS** ✅ \n\
-    --------------------------------------------------------------- \n\
-    - **Projeto:** $PROJECT \n\
-    - **Branch:** $BRANCH \n\
-    - **Build:** $BUILD \n\
-    - **Commit:** $COMMIT \n\
-    - **Autor:** $AUTHOR \n\
-    - **Data e Hora:** $DATA_HORA \n\
-    - **URL:** $BUILD_URL \n\
-    - **Status:** Success... ✅ \n\
-    ---------------------------------------------------------------" 
+✅ **BUILD SUCCESS** ✅ \n\
+--------------------------------------------------------------- \n\
+- **Projeto:** $PROJECT \n\
+- **Branch:** $BRANCH \n\
+- **Build:** $BUILD \n\
+- **Commit:** $COMMIT \n\
+- **Autor:** $AUTHOR \n\
+- **Data e Hora:** $DATA_HORA \n\
+- **URL:** $BUILD_URL \n\
+- **Status:** Success... ✅ \n\
+---------------------------------------------------------------" 
 
     DATA="{\"content\":\"$MESSAGE\"}"
     curl -X POST -H "Content-Type: application/json" -d "$DATA" "$WEBHOOK_URL"
@@ -78,17 +78,17 @@ send_faliure_alert() {
     BUILD_URL=$6
 
     MESSAGE="--------------------------------------------------------------- \n\
-    ❌ **BUILD FALIURE** ❌ \n\
-    --------------------------------------------------------------- \n\
-    - **Projeto:** $PROJECT \n\
-    - **Branch:** $BRANCH \n\
-    - **Build:** $BUILD \n\
-    - **Commit:** $COMMIT \n\
-    - **Autor:** $AUTHOR \n\
-    - **Data e Hora:** $DATA_HORA \n\
-    - **URL:** $BUILD_URL \n\
-    - **Status:** Faliure... ❌ \n\
-    ---------------------------------------------------------------" 
+❌ **BUILD FALIURE** ❌ \n\
+--------------------------------------------------------------- \n\
+- **Projeto:** $PROJECT \n\
+- **Branch:** $BRANCH \n\
+- **Build:** $BUILD \n\
+- **Commit:** $COMMIT \n\
+- **Autor:** $AUTHOR \n\
+- **Data e Hora:** $DATA_HORA \n\
+- **URL:** $BUILD_URL \n\
+- **Status:** Faliure... ❌ \n\
+---------------------------------------------------------------" 
 
     DATA="{\"content\":\"$MESSAGE\"}"
     curl -X POST -H "Content-Type: application/json" -d "$DATA" "$WEBHOOK_URL"
