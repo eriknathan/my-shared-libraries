@@ -20,6 +20,7 @@ def call (Map pipelineParams) {
 						echo " BUILD DA IMAGEM: $DOCKER_IMAGE"
 						echo " --------------------------------------------------------------------------------------- "
 					    telegramStartNotify(Stage: "build", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
+					    discordStartNotify(Stage: "build", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER, BuildUrl: BUILD_URL)
                     } 						
                 }
             }
@@ -36,10 +37,12 @@ def call (Map pipelineParams) {
 		}
         post {
             success {
-			    telegramStartNotify(Stage: "success", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
+			    telegramStartNotify(Stage: "success", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER, BuildUrl: BUILD_URL)
+			    discordStartNotify(Stage: "success", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
             }
             failure {
-                telegramStartNotify(Stage: "failure", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
+                telegramStartNotify(Stage: "failure", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER, BuildUrl: BUILD_URL)
+                discordStartNotify(Stage: "failure", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER, BuildUrl: BUILD_URL)
             }
         }
 	}
@@ -52,9 +55,32 @@ def telegramStartNotify(Map params){
     def scriptbash = libraryResource 'com/scripts/telegramNotify.sh'
 	writeFile file: './telegramNotify.sh', text: scriptbash
 
+    withCredentials([
+            string(credentialsId: 'tribo-rossi-telegram-chat-id', variable: 'chatId'),
+            string(credentialsId: 'tribo-rossi-telegram-bot-token', variable: 'botToken'),
+	]) { 
+        if ("${params.Stage}" == 'build') {
+            sh "bash ./telegramNotify.sh send_build_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+        } else if ("${params.Stage}" == 'failure') {
+            sh "bash ./telegramNotify.sh send_faliure_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+        } else {
+            sh "bash ./telegramNotify.sh send_success_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+        }
+	}
+}
+
+def discordStartNotify(Map params){
+	gitAuthor = sh(script: 'git show -s --format="%an" | sed "s/ //g"', returnStdout: true).trim()
+    commitMessage = sh(script: 'git show -s --format=%s', returnStdout: true).trim()
+
+    def scriptbash = libraryResource 'com/scripts/discordNotify.sh'
+	writeFile file: './discordNotify.sh', text: scriptbash
+	
     if ("${params.Stage}" == 'build') {
-	    sh "bash ./telegramNotify.sh send_build_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+        sh "bash ./discordNotify.sh send_build_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' '${params.BuildUrl}'"
+    } else if ("${params.Stage}" == 'failure') {
+        sh "bash ./discordNotify.sh send_faliure_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' '${params.BuildUrl}'"
     } else {
-	    sh "bash ./telegramNotify.sh send_success_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+        sh "bash ./discordNotify.sh send_success_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' '${params.BuildUrl}'"
     }
 }
