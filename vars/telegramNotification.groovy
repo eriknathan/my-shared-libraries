@@ -55,17 +55,12 @@ def telegramStartNotify(Map params){
     def scriptbash = libraryResource 'com/scripts/telegramNotify.sh'
 	writeFile file: './telegramNotify.sh', text: scriptbash
 
-    withCredentials([
-            string(credentialsId: 'tribo-rossi-telegram-chat-id', variable: 'chatId'),
-            string(credentialsId: 'tribo-rossi-telegram-bot-token', variable: 'botToken'),
-	]) { 
-        if ("${params.Stage}" == 'build') {
-            sh "bash ./telegramNotify.sh send_build_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
-        } else if ("${params.Stage}" == 'failure') {
-            sh "bash ./telegramNotify.sh send_faliure_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
-        } else {
-            sh "bash ./telegramNotify.sh send_success_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
-        }
+	if ("${params.Stage}" == 'build') {
+		sh "bash ./telegramNotify.sh send_build_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+	} else if ("${params.Stage}" == 'failure') {
+		sh "bash ./telegramNotify.sh send_faliure_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
+	} else {
+		sh "bash ./telegramNotify.sh send_success_alert '${params.ProjectName}' '${params.BranchName}' '${params.BuildNumber}' '${commitMessage}' '${gitAuthor}' "
 	}
 }
 
