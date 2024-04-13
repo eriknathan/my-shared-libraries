@@ -38,7 +38,7 @@ def call (Map pipelineParams) {
         post {
             success {
 			    telegramStartNotify(Stage: "success", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER, BuildUrl: BUILD_URL)
-			    discordStartNotify(Stage: "success", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER)
+			    discordStartNotify(Stage: "success", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER, BuildUrl: BUILD_URL)
             }
             failure {
                 telegramStartNotify(Stage: "failure", ProjectName: PROJECT_NAME, BranchName: BRANCH_NAME, BuildNumber: BUILD_NUMBER, BuildUrl: BUILD_URL)
