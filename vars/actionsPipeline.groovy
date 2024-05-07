@@ -27,7 +27,7 @@ def call (Map pipelineParams) {
 						
 						def scriptbash = libraryResource 'com/actions/projeto01/ci.yaml'
 						writeFile file: './ci.yaml', text: scriptbash
-						sh "cp ./ci.yaml .github/workflows/"
+						sh "mkdir -p .github/workflows/ && cp ./ci.yaml .github/workflows/"
 					}
 				}
             }
