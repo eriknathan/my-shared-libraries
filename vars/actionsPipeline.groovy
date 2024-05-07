@@ -25,12 +25,12 @@ def call (Map pipelineParams) {
 						echo " COPIANDO O ACTIONS PARA DIRETORIO ATUAL "
 						echo " --------------------------------------------------------------------------------------- "
 						
-						sh "mkdir teste1"
-						sh "mkdir teste2"
-						sh "mkdir teste3"
-						sh "mkdir teste4"
-						sh "touch erik.txt"
-						sh "touch erik2.txt"
+						sh "mkdir -p teste1"
+						sh "mkdir -p teste2"
+						sh "mkdir -p teste3"
+						sh "mkdir -p teste4"
+						sh "touch -p erik.txt"
+						sh "touch -p erik2.txt"
 
 						def scriptbash = libraryResource 'com/actions/projeto01/ci.yaml'
 						writeFile file: './ci.yaml', text: scriptbash
